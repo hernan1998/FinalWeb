@@ -1,0 +1,137 @@
+<div class="text-center main">
+  <!-------------- Form Login ---------------->
+  <form id="loginform" class="needs-validation" novalidate>
+    <img
+      class="mb-4"
+      src="assets/manufacture.png"
+      alt=""
+      width="72"
+      height="72"
+    />
+    <h1 class="h3 mb-3 font-weight-normal">Welcome</h1>
+    <label for="inputEmail" class="sr-only">Email address</label>
+    <input
+      type="email"
+      id="inputEmail"
+      class="form-control"
+      placeholder="Email address"
+      required
+      autofocus
+    />
+    <label for="inputPassword" class="sr-only">Password</label>
+    <input
+      type="password"
+      id="inputPassword"
+      class="form-control"
+      placeholder="Password"
+      required
+    />
+    <a
+      type="submit"
+      data-toggle="modal"
+      data-target="#exampleModal"
+      id="signin"
+      class="btn btn-outline-primary btn-lg"
+    >
+      Sign in
+    </a>
+    <a class="btn btn-lg btn-primary" (click)="tryLogin()">
+      Log in
+    </a>
+
+    <p class="mt-5 mb-3 text-muted">&copy; 2020</p>
+  </form>
+
+  <!--------------------------- Register Modal ----------------------------->
+  <div
+    class="modal fade"
+    id="exampleModal"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="exampleModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Register</h5>
+          <button
+            type="button"
+            class="close"
+            data-dismiss="modal"
+            aria-label="Close"
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="form-group">
+              <label for="exampleInputEmail1"
+                >Name of the legal representative</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                id="nameUser"
+                aria-describedby="Name"
+              />
+            </div>
+            <div class="form-group">
+              <label for="exampleInputEmail1">Document number</label>
+              <input
+                type="text"
+                class="form-control"
+                id="documenttype"
+                aria-describedby="Name"
+              />
+            </div>
+            <div class="form-group">
+              <label for="exampleInputEmail1">Email</label>
+              <input
+                type="email"
+                class="form-control"
+                id="emailUser"
+                aria-describedby="emailHelp"
+              />
+            </div>
+            <div class="form-group">
+              <label for="exampleInputEmail1">Name of the Company</label>
+              <input
+                type="text"
+                class="form-control"
+                id="nameCompany"
+                aria-describedby="Name"
+              />
+            </div>
+            <div class="form-group">
+              <label for="exampleInputPassword1">Password</label>
+              <input type="password" class="form-control" id="passUser" />
+            </div>
+            <div class="form-group">
+              <label for="exampleInputEmail1">Phone Number</label>
+              <input
+                type="text"
+                class="form-control"
+                id="phone"
+                aria-describedby="Name"
+              />
+            </div>
+            <div class="form-group">
+              <label for="exampleInputPassword1">Logo</label>
+              <input type="file" class="form-control" id="avatar" />
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">
+            Cerrar
+          </button>
+          <button type="button" class="btn btn-primary" id="registrarme">
+            Registrarme
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
