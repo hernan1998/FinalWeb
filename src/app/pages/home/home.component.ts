@@ -32,6 +32,7 @@ export class HomeComponent implements OnInit {
           id: e.payload.doc.id,
           name: e.payload.doc.data()['nombre'],
           email: e.payload.doc.data()['mail'],
+          status: e.payload.doc.data()['disable'],
         };
       });
     });
@@ -70,5 +71,13 @@ export class HomeComponent implements OnInit {
           Swal.fire('Error', 'Error creating operator', 'error');
         });
     }
+  }
+
+  disableOp(id: string) {
+    this.authService.disableOp(id);
+  }
+
+  enableOp(id: string) {
+    this.authService.enableOp(id);
   }
 }

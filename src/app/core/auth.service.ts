@@ -4,7 +4,7 @@ import { auth } from 'firebase/app';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFireDatabase } from '@angular/fire/database';
 import { AngularFirestore } from '@angular/fire/firestore';
-
+import Swal from 'sweetalert2';
 import { User } from 'firebase';
 
 @Injectable({
@@ -35,6 +35,37 @@ export class AuthService {
       .then((data) => {
         console.log('logged');
         console.log('id:' + data.user.uid);
+        this.firestore
+          .collection('users')
+          .doc(data.user.uid)
+          .get()
+          .subscribe((doc) => {
+            var type = doc.data()['admin'];
+            if (type == '1') {
+              Swal.fire('Success', 'Valid user', 'success').then(() => {
+                this.router.navigate(['home']);
+              });
+            } else {
+              if (type == '0') {
+                this.firestore
+                  .collection('users')
+                  .doc(data.user.uid)
+                  .get()
+                  .subscribe((doc1) => {
+                    var disable = doc1.data()['disable'];
+                    if (!disable) {
+                      Swal.fire('Success', 'Valid user', 'success').then(() => {
+                        this.router.navigate(['user']);
+                      });
+                    } else {
+                      Swal.fire('Error', 'User Disable', 'error').then(() => {
+                        this.logout();
+                      });
+                    }
+                  });
+              }
+            }
+          });
       })
       .catch((Error) => {
         throw Error;
@@ -82,6 +113,7 @@ export class AuthService {
           mail: email,
           pass: password,
           admin: '0',
+          disable: false,
         });
         this.firestore
           .collection('users')
@@ -92,6 +124,45 @@ export class AuthService {
             nombre: name,
             mail: email,
             pass: password,
+            disable: false,
+          });
+      });
+  }
+
+  async disableOp(uid: string) {
+    await this.firestore
+      .collection('users')
+      .doc(uid)
+      .update({
+        disable: true,
+      })
+      .then(() => {
+        this.firestore
+          .collection('users')
+          .doc(this.userId)
+          .collection('operadores')
+          .doc(uid)
+          .update({
+            disable: true,
+          });
+      });
+  }
+
+  async enableOp(uid: string) {
+    await this.firestore
+      .collection('users')
+      .doc(uid)
+      .update({
+        disable: false,
+      })
+      .then(() => {
+        this.firestore
+          .collection('users')
+          .doc(this.userId)
+          .collection('operadores')
+          .doc(uid)
+          .update({
+            disable: false,
           });
       });
   }

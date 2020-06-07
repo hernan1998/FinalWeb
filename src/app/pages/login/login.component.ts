@@ -9,23 +9,23 @@ import Swal from 'sweetalert2';
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent implements OnInit {
+  type = '';
+  dis: boolean;
+
   constructor(private authService: AuthService, private _router: Router) {}
 
   ngOnInit(): void {}
 
   async tryLogin() {
+    Swal.fire({
+      html: '<span class="fas fa-spinner fa-spin" style="width: 30px;"></span>',
+      showConfirmButton: false,
+    });
     var mail = $('#inputEmail').val().toString();
     var pass = $('#inputPassword').val().toString();
-    await this.authService
-      .login(mail, pass)
-      .then(() => {
-        Swal.fire('Success', 'User is valid', 'success').then(() => {
-          this._router.navigate(['/home']);
-        });
-      })
-      .catch((e) => {
-        Swal.fire('Error', '' + e, 'error');
-      });
+    await this.authService.login(mail, pass).catch((e) => {
+      Swal.fire('Error', '' + e, 'error');
+    });
   }
 
   async tryRegister() {
