@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 
 // Firebase
 import { AngularFireDatabaseModule } from '@angular/fire/database';
@@ -23,6 +24,8 @@ import { HomeComponent } from './pages/home/home.component';
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireDatabaseModule,
     AngularFireAuthModule,
+    SweetAlert2Module.forRoot(),
+    SweetAlert2Module,
   ],
   providers: [AuthService],
   bootstrap: [AppComponent],

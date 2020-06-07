@@ -30,7 +30,6 @@ export class AuthService {
   }
 
   async login(email: string, password: string) {
-    console.log('Entro');
     var result = await this.afAuth
       .signInWithEmailAndPassword(email, password)
       .then((data) => {
@@ -43,16 +42,16 @@ export class AuthService {
   }
 
   async register(
-    email: string,
-    password: string,
     name: string,
     cc: string,
-    phone: string,
-    dirc: string
+    email: string,
+    company: string,
+    password: string
   ) {
     var result = await this.afAuth
       .createUserWithEmailAndPassword(email, password)
       .then((data) => {
+        console.log(data.user.uid);
         this.firestore
           .collection('users')
           .doc(data.user.uid)
@@ -61,32 +60,48 @@ export class AuthService {
             mail: email,
             pass: password,
             cedula: cc,
-            telefono: phone,
-            dir: dirc,
-          })
-          .then(() => {
-            //this.router.navigate(['perfil']);
+            compName: company,
+            admin: '1',
           })
           .catch((Error) => {
             console.log(Error);
           });
-      });
-  }
-
-  createPost(data: { title: any; body: any; id: any; date: any }) {
-    return this.firestore
-      .collection('post')
-      .add(data)
-      .then(() => {
-        console.log('Post agregado');
       })
-      .catch(() => {
-        console.log('Error agregar post');
+      .catch((e) => {
+        console.log(e);
       });
   }
 
-  getPosts() {
-    return this.firestore.collection('post').snapshotChanges();
+  async createOp(name: string, email: string, password: string) {
+    const id = JSON.parse(localStorage.getItem('uid'));
+    await this.afAuth
+      .createUserWithEmailAndPassword(email, password)
+      .then((data) => {
+        this.firestore.collection('users').doc(data.user.uid).set({
+          nombre: name,
+          mail: email,
+          pass: password,
+          admin: '0',
+        });
+        this.firestore
+          .collection('users')
+          .doc(id)
+          .collection('operadores')
+          .doc(data.user.uid)
+          .set({
+            nombre: name,
+            mail: email,
+            pass: password,
+          });
+      });
+  }
+
+  getOps() {
+    return this.firestore
+      .collection('users')
+      .doc(this.userId)
+      .collection('operadores')
+      .snapshotChanges();
   }
 
   async logout() {

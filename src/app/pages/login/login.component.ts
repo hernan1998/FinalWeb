@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/core/auth.service';
 import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-login',
@@ -12,15 +13,66 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  tryLogin() {
+  async tryLogin() {
     var mail = $('#inputEmail').val().toString();
     var pass = $('#inputPassword').val().toString();
-    try {
-      this.authService.login(mail, pass).then(() => {
-        this._router.navigate(['/home']);
+    await this.authService
+      .login(mail, pass)
+      .then(() => {
+        Swal.fire('Success', 'User is valid', 'success').then(() => {
+          this._router.navigate(['/home']);
+        });
+      })
+      .catch((e) => {
+        Swal.fire('Error', '' + e, 'error');
       });
-    } catch (e) {
-      console.log(e);
+  }
+
+  async tryRegister() {
+    const { value: formValues } = await Swal.fire({
+      title: 'Register',
+      html:
+        '<hr />' +
+        '<label>Name of the legal representative</label>' +
+        '<input id="User" class="swal2-input">' +
+        '<label>Document number</label>' +
+        '<input id="docUser" class="swal2-input">' +
+        '<label>Email</label>' +
+        '<input id="mailUser" class="swal2-input">' +
+        '<label>Name of the Company</label>' +
+        '<input id="compUser" class="swal2-input">' +
+        '<label>Password</label>' +
+        '<input id="pass" type="password" class="swal2-input">',
+      focusConfirm: false,
+      showCancelButton: true,
+      preConfirm: () => {
+        return [
+          $('#User').val().toString(),
+          $('#docUser').val().toString(),
+          $('#mailUser').val().toString(),
+          $('#compUser').val().toString(),
+          $('#pass').val().toString(),
+        ];
+      },
+    });
+    if (formValues) {
+      try {
+        this.authService
+          .register(
+            formValues[0],
+            formValues[1],
+            formValues[2],
+            formValues[3],
+            formValues[4]
+          )
+          .then(() => {
+            Swal.fire('Success', 'Company created', 'success').then(() => {
+              this._router.navigate(['/home']);
+            });
+          });
+      } catch (e) {
+        Swal.fire('Error', 'Errore creating company', 'error');
+      }
     }
   }
 }
