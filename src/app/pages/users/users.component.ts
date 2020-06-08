@@ -7,7 +7,7 @@ import { isNgTemplate } from '@angular/compiler';
 @Component({
   selector: 'app-users',
   templateUrl: './users.component.html',
-  styleUrls: ['./users.component.css']
+  styleUrls: ['./users.component.css'],
 })
 export class UsersComponent implements OnInit {
   //Variables
@@ -18,15 +18,15 @@ export class UsersComponent implements OnInit {
   mail: string = '';
   index: string = '0';
 
-  constructor(private authService: AuthService, private router: Router) { }
+  constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit(): void {
     var id = this.authService.userId;
     this.authService.userData(id).subscribe((data) => {
       this.name = data.payload.data()['nombre'];
       this.mail = data.payload.data()['mail'];
-      this.company = data.payload.data()['compName'];
-      this.companyid = data.payload.data()['compid'];
+      this.company = data.payload.data()['companyName'];
+      this.companyid = data.payload.data()['companyId'];
       this.authService.getQu(this.companyid).subscribe((data) => {
         this.cuestionarios = data.map((e) => {
           return {
@@ -50,9 +50,8 @@ export class UsersComponent implements OnInit {
         });
       });
     });
-
   }
-  async setindex(index: string){
+  async setindex(index: string) {
     this.index = index;
   }
   async answer() {
@@ -68,16 +67,18 @@ export class UsersComponent implements OnInit {
       showCancelButton: true,
       progressSteps: ['1', '2', '3', '4', '5'],
       onBeforeOpen: () => {
-          const content = Swal.getContent();
-          if (content) {
-            const question = content.querySelector('h3');
-            if (question) {
-              const p = Swal.getProgressSteps();
-              const test = p.querySelector('.swal2-active-progress-step');
-              question.textContent = this.cuestionarios[this.index].question[parseInt(test.textContent)-1];
-            }
+        const content = Swal.getContent();
+        if (content) {
+          const question = content.querySelector('h3');
+          if (question) {
+            const p = Swal.getProgressSteps();
+            const test = p.querySelector('.swal2-active-progress-step');
+            question.textContent = this.cuestionarios[this.index].question[
+              parseInt(test.textContent) - 1
+            ];
           }
-        },
+        }
+      },
       preConfirm: () => {
         return [$('#inputState').val().toString()];
       },
@@ -115,6 +116,4 @@ export class UsersComponent implements OnInit {
         }
       });
   }
-
-
 }

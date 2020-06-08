@@ -70,7 +70,7 @@ export class HomeComponent implements OnInit {
     });
     if (formValues) {
       this.authService
-        .createOp(formValues[0], formValues[1], formValues[2])
+        .createOp(formValues[0], formValues[1], formValues[2], this.name)
         .then(() => {
           Swal.fire('Success', 'Operator created', 'success').then(() => {
             this.router.navigate(['login']);

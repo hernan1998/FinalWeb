@@ -103,7 +103,12 @@ export class AuthService {
       });
   }
 
-  async createOp(name: string, email: string, password: string) {
+  async createOp(
+    name: string,
+    email: string,
+    password: string,
+    compName: string
+  ) {
     const id = JSON.parse(localStorage.getItem('uid'));
     await this.afAuth
       .createUserWithEmailAndPassword(email, password)
@@ -115,6 +120,7 @@ export class AuthService {
           admin: '0',
           disable: false,
           companyId: id,
+          companyName: compName,
         });
         this.firestore
           .collection('users')
@@ -156,24 +162,27 @@ export class AuthService {
       });
   }
 
-  createanswer(id: string, data: {
-    title: any;
-    q1: any;
-    a1: any;
-    ac1: any;
-    q2: any;
-    a2: any;
-    ac2: any;
-    q3: any;
-    a3: any;
-    ac3: any;
-    q4: any;
-    a4: any;
-    ac4: any;
-    q5: any;
-    a5: any;
-    ac5: any;
-  }) {
+  createanswer(
+    id: string,
+    data: {
+      title: any;
+      q1: any;
+      a1: any;
+      ac1: any;
+      q2: any;
+      a2: any;
+      ac2: any;
+      q3: any;
+      a3: any;
+      ac3: any;
+      q4: any;
+      a4: any;
+      ac4: any;
+      q5: any;
+      a5: any;
+      ac5: any;
+    }
+  ) {
     return this.firestore
       .collection('users')
       .doc(this.userId)
@@ -243,7 +252,6 @@ export class AuthService {
   }
 
   getQu(id: string) {
-
     return this.firestore
       .collection('users')
       .doc(id)
