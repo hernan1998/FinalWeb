@@ -129,6 +129,32 @@ export class AuthService {
       });
   }
 
+  createQuest(data: {
+    title: any;
+    q1: any;
+    a1: any;
+    q2: any;
+    a2: any;
+    q3: any;
+    a3: any;
+    q4: any;
+    a4: any;
+    q5: any;
+    a5: any;
+  }) {
+    return this.firestore
+      .collection('users')
+      .doc(this.userId)
+      .collection('cuestionarios')
+      .add(data)
+      .then(() => {
+        Swal.fire('Success', 'Questionary created', 'success');
+      })
+      .catch((e) => {
+        Swal.fire('Error', e, 'error');
+      });
+  }
+
   async disableOp(uid: string) {
     await this.firestore
       .collection('users')
@@ -173,6 +199,23 @@ export class AuthService {
       .doc(this.userId)
       .collection('operadores')
       .snapshotChanges();
+  }
+
+  getQ() {
+    return this.firestore
+      .collection('users')
+      .doc(this.userId)
+      .collection('cuestionarios')
+      .snapshotChanges();
+  }
+
+  deleteQ(id: string) {
+    return this.firestore
+      .collection('users')
+      .doc(this.userId)
+      .collection('cuestionarios')
+      .doc(id)
+      .delete();
   }
 
   async logout() {
