@@ -46,19 +46,29 @@ export class UsersComponent implements OnInit {
       title: 'Questionary',
       html:
         '<hr />' +
+        '<h6 class="border-bottom border-gray pb-2 mb-0"></h6>' +
         '<select id="inputState" class="form-control"><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option></select>',
       focusConfirm: false,
       confirmButtonText: 'Next &rarr;',
       inputPlaceholder: 'Select answer',
       showCancelButton: true,
       progressSteps: ['1', '2', '3', '4', '5'],
+      onBeforeOpen: () => {
+          const content = Swal.getContent();
+          if (content) {
+            const question = content.querySelector('h6');
+            if (question) {
+              question.textContent = this.cuestionarios[this.index].id;
+            }
+          }
+        },
       preConfirm: () => {
         return [$('#inputState').val().toString()];
       },
     })
       .queue([
         {
-          title: this.cuestionarios[this.index].id,
+          title: 'Question 1',
           text: 'Do not select an option',
         },
         'Question 2',
