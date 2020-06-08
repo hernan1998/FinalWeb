@@ -160,22 +160,28 @@ export class AuthService {
     title: any;
     q1: any;
     a1: any;
+    ac1: any;
     q2: any;
     a2: any;
+    ac2: any;
     q3: any;
     a3: any;
+    ac3: any;
     q4: any;
     a4: any;
+    ac4: any;
     q5: any;
     a5: any;
+    ac5: any;
   }) {
     return this.firestore
       .collection('users')
+      .doc(this.userId)
+      .collection('respuestas')
       .doc(id)
-      .collection('cuestionarios')
-      .add(data)
+      .set(data)
       .then(() => {
-        Swal.fire('Success', 'Questionary created', 'success');
+        Swal.fire('Success', 'Questionary Answered', 'success');
       })
       .catch((e) => {
         Swal.fire('Error', e, 'error');
