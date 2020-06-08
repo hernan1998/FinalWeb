@@ -114,6 +114,7 @@ export class AuthService {
           pass: password,
           admin: '0',
           disable: false,
+          companyId: id,
         });
         this.firestore
           .collection('users')
