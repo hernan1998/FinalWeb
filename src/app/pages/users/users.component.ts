@@ -94,22 +94,22 @@ export class UsersComponent implements OnInit {
       ])
       .then((result: any) => {
         if (result.value) {
-          this.authService.createanswer(this.companyid, {
+          this.authService.createanswer(this.cuestionarios[this.index].id, {
             title: this.cuestionarios[this.index].name,
             q1: this.cuestionarios[this.index].question[0],
-            a1: result.value[0],
+            a1: result.value[0][0],
             ac1: 'false',
             q2: this.cuestionarios[this.index].question[1],
-            a2: result.value[1],
+            a2: result.value[1][0],
             ac2: 'false',
             q3: this.cuestionarios[this.index].question[2],
-            a3: result.value[2],
+            a3: result.value[2][0],
             ac3: 'false',
             q4: this.cuestionarios[this.index].question[3],
-            a4: result.value[3],
+            a4: result.value[3][0],
             ac4: 'false',
             q5: this.cuestionarios[this.index].question[4],
-            a5: result.value[4],
+            a5: result.value[4][0],
             ac5: 'false',
           });
         }
