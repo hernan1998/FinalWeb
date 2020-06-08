@@ -1,6 +1,10 @@
 <app-navbar></app-navbar>
 <main role="main" class="container">
-  <div class="d-flex align-items-center p-3 my-3 rounded shadow-sm">
+  <div
+    class="d-flex align-items-center p-3 my-3 rounded shadow-sm"
+    data-toggle="modal"
+    data-target="#profileModal"
+  >
     <img
       class="mr-3"
       src="../../../assets/operadores.png"
@@ -87,5 +91,105 @@
       Create Questionary</a
     >
     <swal #swalQ (render)="createQ()"> </swal>
+  </div>
+  <div
+    class="modal fade"
+    id="profileModal"
+    data-keyboard="false"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="staticBackdropLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="staticBackdropLabel">Profile</h5>
+          <button
+            type="button"
+            class="close"
+            data-dismiss="modal"
+            aria-label="Close"
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form method="post">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="profile-head">
+                  <h5>
+                    {{ company }}
+                  </h5>
+                  <h6>
+                    Name of the company
+                  </h6>
+                  <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item">
+                      <a
+                        class="nav-link active"
+                        id="home-tab"
+                        data-toggle="tab"
+                        href="#home"
+                        role="tab"
+                        aria-controls="home"
+                        aria-selected="true"
+                        >About</a
+                      >
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-8">
+                <div class="tab-content profile-tab" id="myTabContent">
+                  <div
+                    class="tab-pane fade show active"
+                    id="home"
+                    role="tabpanel"
+                    aria-labelledby="home-tab"
+                  >
+                    <div class="row">
+                      <div class="col-md-6">
+                        <label> Owner </label>
+                      </div>
+                      <div class="col-md-6">
+                        <p>{{ name }}</p>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <label>Name</label>
+                      </div>
+                      <div class="col-md-6">
+                        <p>{{ company }}</p>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <label>Email</label>
+                      </div>
+                      <div class="col-md-6">
+                        <p>{{ mail }}</p>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <label> Document </label>
+                      </div>
+                      <div class="col-md-6">
+                        <p>{{ cc }}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
   </div>
 </main>
