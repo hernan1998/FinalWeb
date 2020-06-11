@@ -259,6 +259,14 @@ export class AuthService {
       .snapshotChanges();
   }
 
+  getans(id: string) {
+    return this.firestore
+      .collection('users')
+      .doc(id)
+      .collection('respuestas')
+      .snapshotChanges();
+  }
+
   deleteQ(id: string) {
     return this.firestore
       .collection('users')
